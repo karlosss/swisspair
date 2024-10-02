@@ -87,7 +87,7 @@ void determine_and_set_precision(const std::vector<Player> & players, const std:
         ++r;
     }
 
-    set_precision(r*static_cast<int>(pods.size()));
+    set_precision(r*static_cast<int>(pods.size())+32);
 }
 
 std::vector<std::vector<BigFloat>> compute_penalty_matrix(const std::vector<Pod> & pods, const std::vector<Player> & players) {
