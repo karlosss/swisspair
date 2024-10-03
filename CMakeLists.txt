@@ -5,8 +5,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_link_options(-lgmp)
 
-find_library(GMPWRAP_LIB libgmpwrap.so ../gmpwrap/cmake-build-debug)
-find_library(MINCOSTPMATCH_LIB libmincostpmatch.so ../Minimum-Cost-Perfect-Matching/cmake-build-debug)
+find_library(GMPWRAP_LIB libgmpwrap.so ../gmpwrap/cmake-build-debug ../gmpwrap)
+find_library(MINCOSTPMATCH_LIB libmincostpmatch.so ../Minimum-Cost-Perfect-Matching/cmake-build-debug ../Minimum-Cost-Perfect-Matching)
 
 add_library(swisspair SHARED src/models/Player.cpp src/models/Player.h src/models/Match.h src/models/Match.cpp
         src/algorithm/PairingAlgorithm.h
