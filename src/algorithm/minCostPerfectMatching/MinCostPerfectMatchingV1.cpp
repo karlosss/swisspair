@@ -211,5 +211,10 @@ std::vector<Match> create_matches(const std::vector<Player>& players, bool power
     auto player_id_to_pod = create_player_id_to_pod_map(pods);
     auto matching = create_graph_and_compute_matching(player_id_to_player, pods, player_id_to_pod, players);
     auto matches = player_ids_pairs_to_matches(matching, player_id_to_player);
+
+    for(const auto & match : matches) {
+        std::cout << match.to_string() << std::endl;
+    }
+
     return matches;
 }

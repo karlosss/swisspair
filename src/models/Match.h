@@ -3,8 +3,8 @@
 #include "Player.h"
 
 struct Match {
-  const Player & p1;
-  const Player & p2;
+  Player p1;
+  Player p2;
   bool is_bye;
 
   Match(const Player & p1, const Player & p2);
