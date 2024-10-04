@@ -39,7 +39,7 @@ hierarchy of costs:
 
 `C(3,4) < C(2,3) < C(2,4) < C(1,2) < C(1,3) < C(1,4)`
 
-Taking into account that we rather apply a lower cost as many times as possible rather than applying a higher cost even once, we define the cost `C(x,y)` as follows: Let `l` be the last pod and `|p|` the number of players in pod `|p|`, 
+Taking into account that we rather apply a lower cost as many times as possible rather than applying a higher cost even once, we define the cost `C(x,y)` as follows: Let `l` be the last pod and `|p|` the number of players in pod `p`, 
 then 
 - `C(x,y) = max(|x+1|, |l|) * C(x+1, l) + max(|x+2|, |l|) * C(x+2, l) + ... + max(|l|, |l|) * C(l, l) + 1` in case `x+1=y`, and
 - `C(x,y) = max(|x|, |y-1|) * C(x, y-1) + max(|x+1|, |l|) * C(x+1, l) + max(|x+2|, |l|) * C(x+2, l) + ... + max(|l|, |l|) * C(l, l) + 1` otherwise.
