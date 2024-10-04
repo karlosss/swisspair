@@ -34,14 +34,17 @@ Let `C(x, y)` be the cost of pairing a player from the `x`th highest pod with a 
 
 Pairing players with equal number of points is the best case, therefore `C(x, x) = 0` for all `x`.
 
-Now, imagine 4 pods. To ensure integrity of the tournament, we would rather downpair all players in the second-highest pod, rather than downpairing even a single player from the first pod with a player from the second pod. This brings the following
+Now, imagine 4 pods. To ensure integrity of the tournament, we would rather downpair all players in all other pods with players from the lowest pod, rather than downpairing even a single player from the first pod with a player from the second pod. This brings the following
 hierarchy of costs:
 
 `C(3,4) < C(2,3) < C(2,4) < C(1,2) < C(1,3) < C(1,4)`
 
-Taking into account that we rather apply a lower cost as many times as possible rather than applying a higher cost even once, we define `n+1`th cost in the hierarchy using the `n`th cost as follows: let `C(x,y)` be the `n`th cost in the hierarchy:
-then, the `n+1`th cost in the hierarchy will be equal to `max(|a|, |b|) * C(a,b) + 1`, where `|x|` is the number of players in the `x`th highest pod. In words, the cost will be equal to the previous cost applied as many times as possible, plus one.
-This way, we achieve the desired property.
+Taking into account that we rather apply a lower cost as many times as possible rather than applying a higher cost even once, we define the cost `C(x,y)` as follows: Let `l` be the last pod and `|p|` the number of players in pod `|p|`, 
+then 
+- `C(x,y) = max(|x+1|, |l|) * C(x+1, l) + max(|x+2|, |l|) * C(x+2, l) + ... + max(|l|, |l|) * C(l, l) + 1` in case `x+1=y`, and
+- `C(x,y) = max(|x|, |y-1|) * C(x, y-1) + max(|x+1|, |l|) * C(x+1, l) + max(|x+2|, |l|) * C(x+2, l) + ... + max(|l|, |l|) * C(l, l) + 1` otherwise.
+
+In words, the cost will be equal to the most expensive possible pairing of all players in lower pods (or also in the same pod when we are computing the cost of downpairs across multiple pods) plus one, so that we achieve the desired property.
 
 This cost computation is sound, however the absolute value of the cost grows pretty quickly. That is why we need unlimited precision floating point numbers, as standard doubles would become inaccurate even for a pretty low number of players.
 
