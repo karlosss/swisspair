@@ -114,6 +114,6 @@ std::vector<Match> create_matches_mcpm(const std::vector<Player>& players, bool 
     return matches;
 }
 
-// std::vector<Match> create_matches(const std::vector<Player>& players, bool powerPairing) {
-//     return create_matches_mcpm(players, powerPairing);
-// }
+std::vector<Match> create_matches(const std::vector<Player>& players, bool powerPairing) {
+    return create_matches_mcpm(players, powerPairing);
+}

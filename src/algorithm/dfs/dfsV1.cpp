@@ -6,11 +6,14 @@
 
 #include <unordered_set>
 
-void _dfs(const UndirectedSimpleWeightedGraph<std::string, int> & graph, const std::vector<Player> & players, int current_player_rank, std::unordered_set<std::string> & paired_ids, std::vector<std::pair<std::string, std::string>> & out) {
-    if(paired_ids.size() >= players.size()+1) return; // done, looks weird due to byes
+void _dfs(const UndirectedSimpleWeightedGraph<std::string, int> & graph, const std::vector<Player> & players, int current_player_rank, std::unordered_set<std::string> & paired_ids, bool & done, std::vector<std::pair<std::string, std::string>> & out) {
+    if(paired_ids.size() == players.size()) {
+        done = true;
+        return;
+    }
 
     auto current_player_id = players[current_player_rank].id;
-    if(paired_ids.contains(current_player_id)) return _dfs(graph, players, current_player_rank+1, paired_ids, out); // already paired
+    if(paired_ids.contains(current_player_id)) return _dfs(graph, players, current_player_rank+1, paired_ids, done, out); // already paired
 
     auto neighbors = graph.get_neighbors(current_player_id, false);
 
@@ -22,7 +25,8 @@ void _dfs(const UndirectedSimpleWeightedGraph<std::string, int> & graph, const s
             paired_ids.insert(neighbor);
         }
 
-        _dfs(graph, players, current_player_rank+1, paired_ids, out);
+        _dfs(graph, players, current_player_rank+1, paired_ids, done, out);
+        if(done) return;
 
         out.pop_back();
         if(neighbor != BYE_PLAYER_ID) {
@@ -35,7 +39,8 @@ void _dfs(const UndirectedSimpleWeightedGraph<std::string, int> & graph, const s
 std::vector<std::pair<std::string, std::string>> dfs(const UndirectedSimpleWeightedGraph<std::string, int> & graph, const std::vector<Player> & players) {
     std::vector<std::pair<std::string, std::string>> out;
     std::unordered_set<std::string> paired_ids;
-    _dfs(graph, players, 0, paired_ids, out);
+    bool done = false;
+    _dfs(graph, players, 0, paired_ids, done, out);
     return out;
 }
 
