@@ -11,10 +11,15 @@ find_library(MINCOSTPMATCH_LIB libmincostpmatch.so ../Minimum-Cost-Perfect-Match
 add_library(swisspair SHARED src/models/Player.cpp src/models/Player.h src/models/Match.h src/models/Match.cpp
         src/algorithm/PairingAlgorithm.h
         src/algorithm/minCostPerfectMatching/matchingAlg/dilson_pereira.cpp
-        src/algorithm/minCostPerfectMatching/Graph.h
+        src/algorithm/shared/Graph.h
         src/algorithm/minCostPerfectMatching/MinCostPerfectMatchingV1.cpp
         src/algorithm/minCostPerfectMatching/matchingAlg/matching.h
-        swisspair.h)
+        swisspair.h
+        src/algorithm/shared/utils/pods.h
+        src/algorithm/shared/utils/misc.h
+        src/algorithm/shared/utils/matches.h
+        src/algorithm/dfs/dfsV1.cpp
+)
 
 target_link_libraries(swisspair "${GMPWRAP_LIB}")
 target_link_libraries(swisspair "${MINCOSTPMATCH_LIB}")

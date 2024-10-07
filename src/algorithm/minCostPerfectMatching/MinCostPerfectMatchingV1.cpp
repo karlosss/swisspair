@@ -1,84 +1,15 @@
-#include "Graph.h"
+#include "../shared/Graph.h"
 #include "../PairingAlgorithm.h"
 #include <unordered_set>
 #include <unordered_map>
-#include <map>
 #include <algorithm>
 #include <random>
 
 #include "../../../../gmpwrap/gmpwrap.h"
 #include "matchingAlg/matching.h"
-
-constexpr size_t POWER_PAIRING_PLAYER_COUNT = 8;
-const std::string BYE_PLAYER_ID = "BYE";
-
-struct Pod {
-    int pod_rank;
-    std::unordered_set<std::string> player_ids;
-};
-
-std::unordered_map<std::string, Player> create_player_id_to_player_map(const std::vector<Player> & players) {
-    std::unordered_map<std::string, Player> player_id_to_player_map;
-    for (const auto & player : players) {
-        player_id_to_player_map.insert(make_pair(player.id, player));
-    }
-    return player_id_to_player_map;
-}
-
-std::unordered_map<std::string, Pod> create_player_id_to_pod_map(const std::vector<Pod> & pods) {
-    std::unordered_map<std::string, Pod> player_id_to_pod_map;
-    for (const auto & pod : pods) {
-        for(const auto & player_id : pod.player_ids) {
-            player_id_to_pod_map.insert(make_pair(player_id, pod));
-        }
-    }
-    return player_id_to_pod_map;
-}
-
-std::vector<Pod> create_pods(const std::vector<Player> & players, bool power_pairing) {
-    std::vector<Pod> pods;
-    if(power_pairing) {
-        for(int i = 0; i < std::min(POWER_PAIRING_PLAYER_COUNT, players.size()); ++i) {
-            pods.emplace_back();
-        }
-    }
-
-    std::map<int, Pod> points_to_pod;
-
-    for(const auto & player : players) {
-        if(power_pairing && player.rank <= POWER_PAIRING_PLAYER_COUNT) {
-            pods[player.rank-1].player_ids.insert(player.id);
-        }
-        else {
-            if(!points_to_pod.contains(player.points)) {
-                points_to_pod.insert(std::make_pair(player.points, Pod()));
-            }
-            points_to_pod[player.points].player_ids.insert(player.id);
-        }
-    }
-
-    std::vector<Pod> point_pods;
-
-    for(const auto & entry : points_to_pod) {
-        point_pods.push_back(entry.second);
-    }
-
-    for(int i = point_pods.size()-1;i >= 0; --i) {
-        pods.push_back(point_pods[i]);
-    }
-
-    if(players.size() & 1) {
-        Pod bye_pod;
-        bye_pod.player_ids.insert(BYE_PLAYER_ID);
-        pods.push_back(bye_pod);
-    }
-
-    for(int i = 0; i < pods.size(); ++i) {
-        pods[i].pod_rank = i+1;
-    }
-
-    return pods;
-}
+#include "../shared/utils/misc.h"
+#include "../shared/utils/pods.h"
+#include "../shared/utils/matches.h"
 
 void determine_and_set_precision(const std::vector<Player> & players, const std::vector<Pod> & pods) {
     auto v = players.size();
@@ -173,39 +104,7 @@ std::vector<std::pair<std::string, std::string>> create_graph_and_compute_matchi
     return compute_min_cost_perfect_matching(graph);
 }
 
-std::vector<Match> sort_matches(const std::vector<Match> & matches) {
-    std::vector<int> match_ids(matches.size());
-    for(int i = 0; i < matches.size(); ++i) {
-        match_ids[i] = i;
-    }
-    std::sort(match_ids.begin(), match_ids.end(), [matches](const int i, const int j) {return matches[i] < matches[j];});
-
-    std::vector<Match> sorted_matches;
-    for(int i = 0; i < match_ids.size(); ++i) {
-        sorted_matches.push_back(matches[match_ids[i]]);
-    }
-
-    return sorted_matches;
-}
-
-std::vector<Match> player_ids_pairs_to_matches(const std::vector<std::pair<std::string, std::string>> & id_pairs, const std::unordered_map<std::string, Player> & player_id_to_player) {
-    std::vector<Match> matches;
-    for(const auto & pair : id_pairs) {
-        if(pair.first == BYE_PLAYER_ID) {
-            matches.push_back(Match(player_id_to_player.at(pair.second)));
-        }
-        else if(pair.second == BYE_PLAYER_ID) {
-            matches.push_back(Match(player_id_to_player.at(pair.first)));
-        }
-        else {
-            matches.push_back(Match(player_id_to_player.at(pair.first), player_id_to_player.at(pair.second)));
-        }
-    }
-
-    return sort_matches(matches);
-}
-
-std::vector<Match> create_matches(const std::vector<Player>& players, bool powerPairing) {
+std::vector<Match> create_matches_mcpm(const std::vector<Player>& players, bool powerPairing) {
     auto player_id_to_player = create_player_id_to_player_map(players);
     auto pods = create_pods(players, powerPairing);
     auto player_id_to_pod = create_player_id_to_pod_map(pods);
@@ -214,3 +113,7 @@ std::vector<Match> create_matches(const std::vector<Player>& players, bool power
 
     return matches;
 }
+
+// std::vector<Match> create_matches(const std::vector<Player>& players, bool powerPairing) {
+//     return create_matches_mcpm(players, powerPairing);
+// }

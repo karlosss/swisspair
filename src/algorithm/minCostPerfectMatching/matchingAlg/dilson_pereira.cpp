@@ -15,7 +15,7 @@ std::vector<std::pair<std::string, std::string>> compute_min_cost_perfect_matchi
     }
 
     std::vector<BigFloat> costs(graph.num_vertices()*graph.num_vertices());
-    auto edges = graph.get_edges();
+    auto edges = graph.get_edges(true);
 
     for(const auto & edge: edges) {
         g.AddEdge(name_to_vertex_id[edge.u], name_to_vertex_id[edge.v]);
