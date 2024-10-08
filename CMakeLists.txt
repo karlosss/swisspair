@@ -14,16 +14,17 @@ add_library(swisspair SHARED
         src/models/Match.h
         src/models/Match.cpp
         src/algorithm/PairingAlgorithm.h
-#        src/algorithm/minCostPerfectMatching/matchingAlg/dilson_pereira.cpp
+        src/algorithm/minCostPerfectMatching/matchingAlg/dilson_pereira.cpp
         src/algorithm/shared/Graph.h
-#        src/algorithm/minCostPerfectMatching/MinCostPerfectMatchingV1.cpp
-#        src/algorithm/minCostPerfectMatching/matchingAlg/matching.h
+        src/algorithm/minCostPerfectMatching/MinCostPerfectMatchingV1.cpp
+        src/algorithm/minCostPerfectMatching/matchingAlg/matching.h
         swisspair.h
         src/algorithm/shared/utils/pods.h
         src/algorithm/shared/utils/misc.h
         src/algorithm/shared/utils/matches.h
         src/algorithm/dfs/dfsV1.cpp
         src/test.cpp
+        src/algorithm/hybrid/hybridV1.cpp
 )
 
 #add_executable(swisspair
@@ -32,16 +33,17 @@ add_library(swisspair SHARED
 #        src/models/Match.h
 #        src/models/Match.cpp
 #        src/algorithm/PairingAlgorithm.h
-##        src/algorithm/minCostPerfectMatching/matchingAlg/dilson_pereira.cpp
+#        src/algorithm/minCostPerfectMatching/matchingAlg/dilson_pereira.cpp
 #        src/algorithm/shared/Graph.h
-##        src/algorithm/minCostPerfectMatching/MinCostPerfectMatchingV1.cpp
-##        src/algorithm/minCostPerfectMatching/matchingAlg/matching.h
+#        src/algorithm/minCostPerfectMatching/MinCostPerfectMatchingV1.cpp
+#        src/algorithm/minCostPerfectMatching/matchingAlg/matching.h
 #        swisspair.h
 #        src/algorithm/shared/utils/pods.h
 #        src/algorithm/shared/utils/misc.h
 #        src/algorithm/shared/utils/matches.h
 #        src/algorithm/dfs/dfsV1.cpp
 #        src/test.cpp
+#        src/algorithm/hybrid/hybridV1.cpp
 #)
 
 target_link_libraries(swisspair "${GMPWRAP_LIB}")

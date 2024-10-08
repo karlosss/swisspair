@@ -6,8 +6,8 @@
 
 struct Player {
   std::string id;
-  std::set<std::string> previous_opponents_ids;
-  bool had_bye;
+  std::set<std::string> cannot_be_paired_against_ids;
+  bool can_get_bye = true;
   int points;
   int rank;
 

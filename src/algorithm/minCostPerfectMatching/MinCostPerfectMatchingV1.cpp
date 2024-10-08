@@ -79,17 +79,17 @@ std::vector<std::pair<std::string, std::string>> create_graph_and_compute_matchi
             if(p1id != BYE_PLAYER_ID && p2id != BYE_PLAYER_ID) {
                 const auto & player = player_id_to_player.at(p1id);
                 // prevent rematch
-                if(player.previous_opponents_ids.contains(p2id)) continue;
+                if(player.cannot_be_paired_against_ids.contains(p2id)) continue;
             }
 
             if(p1id != BYE_PLAYER_ID && p2id == BYE_PLAYER_ID) {
                 const auto & player = player_id_to_player.at(p1id);
-                if(player.had_bye) continue;
+                if(!player.can_get_bye) continue;
             }
 
             if(p1id == BYE_PLAYER_ID && p2id != BYE_PLAYER_ID) {
                 const auto & player = player_id_to_player.at(p2id);
-                if(player.had_bye) continue;
+                if(!player.can_get_bye) continue;
             }
 
             const auto & pod1 = player_id_to_pod.at(p1id);
@@ -114,6 +114,6 @@ std::vector<Match> create_matches_mcpm(const std::vector<Player>& players, bool 
     return matches;
 }
 
-std::vector<Match> create_matches(const std::vector<Player>& players, bool powerPairing) {
-    return create_matches_mcpm(players, powerPairing);
-}
+//std::vector<Match> create_matches(const std::vector<Player>& players, bool powerPairing) {
+//    return create_matches_mcpm(players, powerPairing);
+//}
