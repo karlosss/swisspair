@@ -1,6 +1,6 @@
 #include "Match.h"
 
-Match::Match(const Player &p1, const Player &p2): p1(p1), p2(p2), is_bye(false) {}
+Match::Match(const Player &p1, const Player &p2): p1(p1.rank < p2.rank ? p1 : p2), p2(p1.rank < p2.rank ? p2 : p1), is_bye(false) {}
 
 Match::Match(const Player &p1) : p1(p1), p2(p1), is_bye(true) {}
 
