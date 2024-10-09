@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <random>
 
-#include "../../../../gmpwrap/gmpwrap.h"
+#include "../../../gmpwrap/gmpwrap.h"
 #include "matchingAlg/matching.h"
 #include "../shared/utils/misc.h"
 #include "../shared/utils/pods.h"

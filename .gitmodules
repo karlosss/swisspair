@@ -1,0 +1,6 @@
+[submodule "gmpwrap"]
+	path = gmpwrap
+	url = https://github.com/karlosss/gmpwrap.git
+[submodule "Minimum-Cost-Perfect-Matching"]
+	path = Minimum-Cost-Perfect-Matching
+	url = https://github.com/karlosss/Minimum-Cost-Perfect-Matching.git
