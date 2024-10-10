@@ -4,9 +4,7 @@ A swiss pairing algorithm for (not only) Magic: The Gathering.
 
 ## Installation
 
-This project depends on https://github.com/karlosss/gmpwrap and https://github.com/karlosss/Minimum-Cost-Perfect-Matching.
-
-It also needs `gcc`, `make`, `cmake` and `gmp` to be installed in your system.
+Needed toolchain: `gcc`, `make`, `cmake` and `gmp`.
 
 Then, the library is build with `cmake . && make`.
 
@@ -17,10 +15,13 @@ From the product point of view, the algorithm is doing the following:
 - A player who already had a bye will not get another bye
 - Players will play opponents of as equal match points as possible
   - If this is not possible, the algorithm will prefer downpairs of players at lower standings to players at higher standings
-- Optionally, the algorithm can prefer to pair the top 8 players against each other
+- Optionally, the algorithm can prefer to pair players by standings as much as possible, i.e. 1-2, 3-4, 5-6, ..., so called "power pairing"
   - This is important for draws into the top 8
  
 ## Implementation
+
+The algorithm is a hybrid between two algorithms: DFS and Minimum Cost Perfect Matching. The actual algorithm is chosen based on the number of players to pair:
+if there are less than 150 players, then Minimum Cost Perfect Matching is chosen. For more players, DFS is used.
 
 Players are separated into pods where each pod holds all players with the same amount of points. Then, a graph is built, where vertices represent
 players and edges between two players represent the fact that those two players could theoretically play against each other (they did not play against each other yet).
@@ -55,6 +56,16 @@ If the number of players is odd, the algorithm creates a phantom player - bye. T
 ### Power pairing
 
 Each of the top 8 players are in their own pods, and the rest of the field is separated into pods as usual. The "field pods" follow the top 8 pods in the hierarchy.
+
+## Algorithm for large number of players
+
+For more than 150 players, in case of applying power pairing, the memory usage significantly grows due to a need for arbitrary precise floating-point numbers. The pods are still constructed in the same way. Then, if power pairing is
+disabled, the algotithm ranks the players in each pod at random and then stick all players together to form pseudo-standings. In case of power pairing, the actual standings are used. Then, the algorithm takes the highest-ranked not-yet-paired
+player and pairs them with the next highest-ranked not-yet-paired player. This repeats until all players are paired. In case the algorithm encounters a player that cannot be paired, the most recently made match is broken and the higher-ranked
+player from the just-broken match is instead paired to the second highest-ranked not-yet-paired player, and the algorithm continues in the same way.
+
+Since the graph is almost complete (in case of a 15-round tournament, in the worst case, each player has 135 possible opponents), breaking matches and backtracking happens rarely, and if it does, it mostly happens due to a player already having
+a bye, and breaking one match should be enough in that case.
 
 ## Acknowledgements
 
