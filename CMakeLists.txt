@@ -3,7 +3,7 @@ project(swisspair)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_definitions(-DDFS_THRESHOLD=150)
+add_definitions(-DDFS_THRESHOLD=200)
 
 add_library(swisspair SHARED
         src/models/Player.cpp
