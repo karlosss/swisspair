@@ -78,7 +78,22 @@ etc. Bye is also always at the last table.
 
 - For more than 20 000 players, the pairing starts to segfault.
 - For more than 30 rounds, if DFS is used (therefore 200+ players), the algorithm starts to backtrack a lot and the runtime spikes.
-Notably, for 199 players and 198 rounds (upper bound of minimum cost perfect matching), players get paired without issues.
+Notably, for 199 players and well over 100 rounds rounds (upper bound of minimum cost perfect matching), players get paired without issues.
+
+## Approximate runtimes
+
+Tested on a ThinkPad P14s Gen 3, 12th Gen Intel(R) Core(TM) i7-1260P, 48 GB RAM.
+
+All measurements were done with randomly generated match results.
+
+| Setup    | Runtime |
+| -------- | ------- |
+| 199 players, first 20 rounds  | < 150 ms    |
+| 199 players, first 100 rounds  | < 1 s    |
+| 199 players, last 20 rounds (incl. power pairing) | < 3 s     |
+| 10 000 players, first 30 rounds    | < 400 ms    |
+| 20 000 players, first 30 rounds    | < 1 s    |
+
 
 ## Acknowledgements
 
