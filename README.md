@@ -55,17 +55,29 @@ If the number of players is odd, the algorithm creates a phantom player - bye. T
 
 ### Power pairing
 
-Each of the top 8 players are in their own pods, and the rest of the field is separated into pods as usual. The "field pods" follow the top 8 pods in the hierarchy.
+Each player is in their own pod. Pods are ranked by the rank of the player in each pod. Then, the algorithm proceeds normally.
 
 ## Algorithm for large number of players
 
-For more than 150 players, in case of applying power pairing, the memory usage significantly grows due to a need for arbitrary precise floating-point numbers. The pods are still constructed in the same way. Then, if power pairing is
-disabled, the algotithm ranks the players in each pod at random and then stick all players together to form pseudo-standings. In case of power pairing, the actual standings are used. Then, the algorithm takes the highest-ranked not-yet-paired
+For more than 200 players, the runtime of the minimum cost perfect matching algorithm starts to grow. Therefore, a different algorithm is used. The pods are still constructed in the same way. Then, if power pairing is
+disabled, the algorithm ranks the players in each pod at random and then sticks all players together to form pseudo-standings. In case of power pairing, the actual standings are used. Then, the algorithm takes the highest-ranked not-yet-paired
 player and pairs them with the next highest-ranked not-yet-paired player. This repeats until all players are paired. In case the algorithm encounters a player that cannot be paired, the most recently made match is broken and the higher-ranked
 player from the just-broken match is instead paired to the second highest-ranked not-yet-paired player, and the algorithm continues in the same way.
 
 Since the graph is almost complete (in case of a 15-round tournament, in the worst case, each player has 135 possible opponents), breaking matches and backtracking happens rarely, and if it does, it mostly happens due to a player already having
 a bye, and breaking one match should be enough in that case.
+
+## Match sorting
+
+Once the matches are created, the output is sorted so that higher-ranked players tend to play at higher-ranked tables. The sorting method again differs based on the algorithm in use:
+- Minimum cost perfect matching: matches are sorted by sums of ranks of both players in the match. The tiebreaker is higher rank of the higher ranked player. Bye is always at the last table.
+- DFS: matches are sorted in a way that players with more match points play at higher ranked tables (but not necessarily ranked higher). In case of a power pairing, the first player plays at table 1, second at table 2 (unless paired to the first player)
+etc. Bye is also always at the last table.
+
+## Limitations
+
+- For more than 20 000 players, the pairings starts to segfault.
+- For more than 30 rounds, if DFS is used (therefore 200+ players), the algorithm starts to backtrack a lot and the runtime spikes.
 
 ## Acknowledgements
 
