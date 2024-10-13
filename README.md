@@ -21,7 +21,7 @@ From the product point of view, the algorithm is doing the following:
 ## Implementation
 
 The algorithm is a hybrid between two algorithms: DFS and Minimum Cost Perfect Matching. The actual algorithm is chosen based on the number of players to pair:
-if there are less than 150 players, then Minimum Cost Perfect Matching is chosen. For more players, DFS is used.
+if there are less than 200 players, then Minimum Cost Perfect Matching is chosen. For more players, DFS is used.
 
 Players are separated into pods where each pod holds all players with the same amount of points. Then, a graph is built, where vertices represent
 players and edges between two players represent the fact that those two players could theoretically play against each other (they did not play against each other yet).
@@ -64,7 +64,7 @@ disabled, the algorithm ranks the players in each pod at random and then sticks 
 player and pairs them with the next highest-ranked not-yet-paired player. This repeats until all players are paired. In case the algorithm encounters a player that cannot be paired, the most recently made match is broken and the higher-ranked
 player from the just-broken match is instead paired to the second highest-ranked not-yet-paired player, and the algorithm continues in the same way.
 
-Since the graph is almost complete (in case of a 15-round tournament, in the worst case, each player has 135 possible opponents), breaking matches and backtracking happens rarely, and if it does, it mostly happens due to a player already having
+Since the graph is almost complete (in case of a 15-round tournament, in the worst case, each player has 185 possible opponents), breaking matches and backtracking happens rarely, and if it does, it mostly happens due to a player already having
 a bye, and breaking one match should be enough in that case.
 
 ## Match sorting
