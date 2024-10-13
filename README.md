@@ -76,7 +76,7 @@ etc. Bye is also always at the last table.
 
 ## Limitations
 
-- For more than 20 000 players, the pairings starts to segfault.
+- For more than 20 000 players, the pairing starts to segfault.
 - For more than 30 rounds, if DFS is used (therefore 200+ players), the algorithm starts to backtrack a lot and the runtime spikes.
 
 ## Acknowledgements
