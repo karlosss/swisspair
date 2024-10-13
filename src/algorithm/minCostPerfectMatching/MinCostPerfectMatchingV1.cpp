@@ -105,6 +105,8 @@ std::vector<std::pair<std::string, std::string>> create_graph_and_compute_matchi
 }
 
 std::vector<Match> create_matches_mcpm(const std::vector<Player>& players, bool powerPairing) {
+    if(players.empty()) return std::vector<Match>{};
+
     auto player_id_to_player = create_player_id_to_player_map(players);
     auto pods = create_pods(players, powerPairing);
     auto player_id_to_pod = create_player_id_to_pod_map(pods);

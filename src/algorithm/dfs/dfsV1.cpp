@@ -72,6 +72,8 @@ std::vector<Player> create_pseudo_ranked_players_from_pods(const std::unordered_
 
 
 std::vector<Match> create_matches_dfs(const std::vector<Player>& players, bool powerPairing) {
+    if(players.empty()) return std::vector<Match>{};
+
     auto player_id_to_player = create_player_id_to_player_map(players);
     std::vector<std::pair<std::string, std::string>> matching;
 
