@@ -92,7 +92,7 @@ All measurements were done with randomly generated match results.
 | -------- | ------- |
 | 199 players, first 20 rounds  | < 150 ms    |
 | 199 players, first 100 rounds  | < 1 s    |
-| 199 players, last 20 rounds (incl. power pairing) | < 3 s     |
+| 199 players, first 150 rounds (incl. power pairing) | < 3 s     |
 | 10 000 players, first 30 rounds    | < 400 ms    |
 | 20 000 players, first 30 rounds    | < 1 s    |
 
