@@ -69,10 +69,12 @@ a bye, and breaking one match should be enough in that case.
 
 ## Match sorting
 
-Once the matches are created, the output is sorted so that higher-ranked players tend to play at higher-ranked tables. The sorting method again differs based on the algorithm in use:
-- Minimum cost perfect matching: matches are sorted by sums of ranks of both players in the match. The tiebreaker is higher rank of the higher ranked player. Bye is always at the last table.
-- DFS: matches are sorted in a way that players with more match points play at higher ranked tables (but not necessarily ranked higher). In case of a power pairing, the first player plays at table 1, second at table 2 (unless paired to the first player)
-etc. Bye is also always at the last table.
+Once the matches are created, they are sorted (assigned to tables) according to the following criteria (every next criterion is used as the next tiebreaker):
+- More match points of the higher ranked player
+- More match points of the lower ranked player
+- Higher rank of the higher ranked player
+
+Bye is always at the last table.
 
 ## Limitations
 
