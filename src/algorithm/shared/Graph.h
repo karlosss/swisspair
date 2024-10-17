@@ -58,7 +58,11 @@ public:
     std::vector<Edge> out;
     for(int i = 0; i < adjacency_list.size(); ++i) {
       for(int j = 0; j < adjacency_list[i].size(); ++j) {
-        out.push_back(Edge(vertex_id_to_name[i], vertex_id_to_name[adjacency_list[i][j]], adjacency_map.at(i).at(adjacency_list[i][j])));
+        Edge e;
+        e.u = vertex_id_to_name[i];
+        e.v = vertex_id_to_name[adjacency_list[i][j]];
+        e.w = adjacency_map.at(i).at(adjacency_list[i][j]);
+        out.push_back(e);
       }
     }
 
