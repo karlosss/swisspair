@@ -22,6 +22,7 @@ add_library(swisspair SHARED
         src/algorithm/dfs/dfsV1.cpp
         src/test.cpp
         src/algorithm/hybrid/hybridV1.cpp
+        src/algorithm/shared/Graph.cpp
 )
 
 #add_link_options(-lgmp)
