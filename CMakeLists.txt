@@ -11,6 +11,7 @@ add_library(swisspair SHARED
         src/models/Match.h
         src/models/Match.cpp
         src/algorithm/shared/Graph.h
+        src/algorithm/shared/Graph.cpp
         src/algorithm/PairingAlgorithm.h
         src/algorithm/shared/utils/pods.h
         src/algorithm/shared/utils/misc.h
@@ -22,7 +23,6 @@ add_library(swisspair SHARED
         src/algorithm/dfs/dfsV1.cpp
         src/test.cpp
         src/algorithm/hybrid/hybridV1.cpp
-        src/algorithm/shared/Graph.cpp
 )
 
 #add_link_options(-lgmp)
