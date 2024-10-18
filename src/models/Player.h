@@ -16,4 +16,4 @@ struct Player {
   bool operator==(const Player& other) const;
 };
 
-#endif //PLAYER_H
+#endif  // PLAYER_H
