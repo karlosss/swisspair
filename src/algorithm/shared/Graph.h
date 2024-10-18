@@ -13,7 +13,7 @@
 
 template <typename TVertex, typename TWeight>
 class UndirectedSimpleWeightedGraph {
- public:
+public:
   struct Edge {
     TVertex u;
     TVertex v;
@@ -38,7 +38,8 @@ class UndirectedSimpleWeightedGraph {
   void add_edge(TVertex u, TVertex v, TWeight w) {
     auto uid = vertex_name_to_id[u];
     auto vid = vertex_name_to_id[v];
-    if (uid == vid) return;
+    if (uid == vid)
+      return;
 
     if (vid < uid) {
       auto tmp = uid;
@@ -46,7 +47,8 @@ class UndirectedSimpleWeightedGraph {
       vid = tmp;
     }
 
-    if (adjacency_map[uid].contains(vid)) return;
+    if (adjacency_map[uid].contains(vid))
+      return;
 
     adjacency_map[uid].insert(std::make_pair(vid, w));
     adjacency_list[uid].emplace_back(vid);
@@ -100,13 +102,13 @@ class UndirectedSimpleWeightedGraph {
     std::stringstream ss;
     ss << num_vertices() << "\n";
     ss << num_edges() << "\n";
-    for (const auto& edge : get_edges()) {
+    for (const auto &edge : get_edges()) {
       ss << edge.u << " " << edge.v << " " << edge.w << "\n";
     }
     return ss.str();
   }
 
- private:
+private:
   int edge_cnt = 0;
   std::vector<TVertex> vertex_id_to_name;
   std::unordered_map<TVertex, int> vertex_name_to_id;
@@ -115,4 +117,4 @@ class UndirectedSimpleWeightedGraph {
   std::vector<std::vector<int>> adjacency_list;
 };
 
-#endif  // GRAPH_H
+#endif // GRAPH_H

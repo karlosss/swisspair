@@ -28,7 +28,7 @@ int main() {
 
   auto matches = create_matches(players, false);
 
-  for (const auto& match : matches) {
+  for (const auto &match : matches) {
     std::cout << match.to_string() << std::endl;
   }
 

@@ -3,16 +3,16 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "../../../gmpwrap/gmpwrap.h"
-#include "../PairingAlgorithm.h"
-#include "../shared/Graph.h"
-#include "../shared/utils/matches.h"
-#include "../shared/utils/misc.h"
-#include "../shared/utils/pods.h"
+#include "algorithm/PairingAlgorithm.h"
+#include "algorithm/shared/Graph.h"
+#include "algorithm/shared/utils/matches.h"
+#include "algorithm/shared/utils/misc.h"
+#include "algorithm/shared/utils/pods.h"
+#include "gmpwrap.h"
 #include "matchingAlg/matching.h"
 
-void determine_and_set_precision(const std::vector<Player>& players,
-                                 const std::vector<Pod>& pods) {
+void determine_and_set_precision(const std::vector<Player> &players,
+                                 const std::vector<Pod> &pods) {
   auto v = players.size();
   int r = 0;
   while (v >>= 1) {
@@ -22,8 +22,9 @@ void determine_and_set_precision(const std::vector<Player>& players,
   set_precision(r * static_cast<int>(pods.size()) + 32);
 }
 
-std::vector<std::vector<BigFloat>> compute_penalty_matrix(
-    const std::vector<Pod>& pods, const std::vector<Player>& players) {
+std::vector<std::vector<BigFloat>>
+compute_penalty_matrix(const std::vector<Pod> &pods,
+                       const std::vector<Player> &players) {
   determine_and_set_precision(players, pods);
 
   std::vector<std::vector<BigFloat>> penalty_matrix;
@@ -34,11 +35,13 @@ std::vector<std::vector<BigFloat>> compute_penalty_matrix(
     penalty_matrix[i][i] = 0;
   }
 
-  if (pods.size() == 1) return penalty_matrix;
+  if (pods.size() == 1)
+    return penalty_matrix;
 
   penalty_matrix[pods.size() - 2][pods.size() - 1] = 1;
 
-  if (pods.size() == 2) return penalty_matrix;
+  if (pods.size() == 2)
+    return penalty_matrix;
 
   int prevI = pods.size() - 2;
   int prevJ = pods.size() - 1;
@@ -67,14 +70,14 @@ std::vector<std::vector<BigFloat>> compute_penalty_matrix(
 
 std::vector<std::pair<std::string, std::string>>
 create_graph_and_compute_matching(
-    const std::unordered_map<std::string, Player>& player_id_to_player,
-    const std::vector<Pod>& pods,
-    const std::unordered_map<std::string, Pod>& player_id_to_pod,
-    const std::vector<Player>& players) {
+    const std::unordered_map<std::string, Player> &player_id_to_player,
+    const std::vector<Pod> &pods,
+    const std::unordered_map<std::string, Pod> &player_id_to_pod,
+    const std::vector<Player> &players) {
   UndirectedSimpleWeightedGraph<std::string, BigFloat> graph;
   std::vector<std::string> player_ids;
 
-  for (const auto& entry : player_id_to_pod) {
+  for (const auto &entry : player_id_to_pod) {
     graph.add_vertex(entry.first);
     player_ids.push_back(entry.first);
   }
@@ -83,27 +86,30 @@ create_graph_and_compute_matching(
 
   for (int i = 0; i < player_ids.size(); ++i) {
     for (int j = i + 1; j < player_ids.size(); ++j) {
-      const auto& p1id = player_ids[i];
-      const auto& p2id = player_ids[j];
+      const auto &p1id = player_ids[i];
+      const auto &p2id = player_ids[j];
 
       if (p1id != BYE_PLAYER_ID && p2id != BYE_PLAYER_ID) {
-        const auto& player = player_id_to_player.at(p1id);
+        const auto &player = player_id_to_player.at(p1id);
         // prevent rematch
-        if (player.cannot_be_paired_against_ids.contains(p2id)) continue;
+        if (player.cannot_be_paired_against_ids.contains(p2id))
+          continue;
       }
 
       if (p1id != BYE_PLAYER_ID && p2id == BYE_PLAYER_ID) {
-        const auto& player = player_id_to_player.at(p1id);
-        if (!player.can_get_bye) continue;
+        const auto &player = player_id_to_player.at(p1id);
+        if (!player.can_get_bye)
+          continue;
       }
 
       if (p1id == BYE_PLAYER_ID && p2id != BYE_PLAYER_ID) {
-        const auto& player = player_id_to_player.at(p2id);
-        if (!player.can_get_bye) continue;
+        const auto &player = player_id_to_player.at(p2id);
+        if (!player.can_get_bye)
+          continue;
       }
 
-      const auto& pod1 = player_id_to_pod.at(p1id);
-      const auto& pod2 = player_id_to_pod.at(p2id);
+      const auto &pod1 = player_id_to_pod.at(p1id);
+      const auto &pod2 = player_id_to_pod.at(p2id);
 
       auto penalty =
           penalty_matrix[std::min(pod1.pod_rank - 1, pod2.pod_rank - 1)]
@@ -116,9 +122,10 @@ create_graph_and_compute_matching(
   return compute_min_cost_perfect_matching(graph);
 }
 
-std::vector<Match> create_matches_mcpm(const std::vector<Player>& players,
+std::vector<Match> create_matches_mcpm(const std::vector<Player> &players,
                                        bool powerPairing) {
-  if (players.empty()) return std::vector<Match>{};
+  if (players.empty())
+    return std::vector<Match>{};
 
   auto player_id_to_player = create_player_id_to_player_map(players);
   auto pods = create_pods(players, powerPairing);
@@ -129,8 +136,3 @@ std::vector<Match> create_matches_mcpm(const std::vector<Player>& players,
 
   return matches;
 }
-
-// std::vector<Match> create_matches(const std::vector<Player>& players, bool
-// powerPairing) {
-//     return create_matches_mcpm(players, powerPairing);
-// }

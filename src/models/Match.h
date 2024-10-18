@@ -7,13 +7,13 @@ struct Match {
   Player p2;
   bool is_bye;
 
-  Match(const Player& p1, const Player& p2);
-  Match(const Player& p1);
-  Match(const Match& other);
+  Match(const Player &p1, const Player &p2);
+  Match(const Player &p1);
+  Match(const Match &other);
 
-  bool operator<(const Match& other) const;
+  bool operator<(const Match &other) const;
 
   std::string to_string() const;
 };
 
-#endif  // MATCH_H
+#endif // MATCH_H

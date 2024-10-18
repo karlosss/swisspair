@@ -10,7 +10,7 @@
 #include <unordered_set>
 #include <vector>
 
-#include "../../../models/Player.h"
+#include "models/Player.h"
 
 constexpr size_t POWER_PAIRING_PLAYER_COUNT = -1;
 const std::string BYE_PLAYER_ID = "BYE";
@@ -20,18 +20,18 @@ struct Pod {
   std::unordered_set<std::string> player_ids;
 };
 
-static std::unordered_map<std::string, Pod> create_player_id_to_pod_map(
-    const std::vector<Pod>& pods) {
+static std::unordered_map<std::string, Pod>
+create_player_id_to_pod_map(const std::vector<Pod> &pods) {
   std::unordered_map<std::string, Pod> player_id_to_pod_map;
-  for (const auto& pod : pods) {
-    for (const auto& player_id : pod.player_ids) {
+  for (const auto &pod : pods) {
+    for (const auto &player_id : pod.player_ids) {
       player_id_to_pod_map.insert(make_pair(player_id, pod));
     }
   }
   return player_id_to_pod_map;
 }
 
-static std::vector<Pod> create_pods(const std::vector<Player>& players,
+static std::vector<Pod> create_pods(const std::vector<Player> &players,
                                     bool power_pairing) {
   std::vector<Pod> pods;
   if (power_pairing) {
@@ -43,7 +43,7 @@ static std::vector<Pod> create_pods(const std::vector<Player>& players,
 
   std::map<int, Pod> points_to_pod;
 
-  for (const auto& player : players) {
+  for (const auto &player : players) {
     if (power_pairing && player.rank <= POWER_PAIRING_PLAYER_COUNT) {
       pods[player.rank - 1].player_ids.insert(player.id);
     } else {
@@ -56,7 +56,7 @@ static std::vector<Pod> create_pods(const std::vector<Player>& players,
 
   std::vector<Pod> point_pods;
 
-  for (const auto& entry : points_to_pod) {
+  for (const auto &entry : points_to_pod) {
     point_pods.push_back(entry.second);
   }
 
