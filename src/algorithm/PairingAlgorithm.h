@@ -2,9 +2,11 @@
 #define PAIRINGALGORITHM_H
 
 #include <vector>
-#include "../models/Match.h"
-#include "../models/Player.h"
 
-std::vector<Match> create_matches(const std::vector<Player>& players, bool powerPairing);
+#include "models/Match.h"
+#include "models/Player.h"
 
-#endif //PAIRINGALGORITHM_H
+std::vector<Match> create_matches(const std::vector<Player> &players,
+                                  bool powerPairing);
+
+#endif // PAIRINGALGORITHM_H
