@@ -33,3 +33,6 @@ add_library(
 
 target_include_directories(swisspair PUBLIC src)
 target_link_libraries(swisspair models gmpwrap mincostpmatch)
+
+add_executable(swisspair_test src/test.cpp)
+target_link_libraries(swisspair_test swisspair)
