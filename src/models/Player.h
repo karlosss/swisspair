@@ -1,8 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <iostream>
 #include <set>
+#include <string>
 
 struct Player {
   std::string id;
@@ -13,7 +13,7 @@ struct Player {
 
   std::string to_string() const;
 
-  bool operator==(const Player& other) const;
+  bool operator==(const Player &other) const;
 };
 
-#endif //PLAYER_H
+#endif // PLAYER_H
