@@ -59,6 +59,8 @@ Each player is in their own pod. Pods are ranked by the rank of the player in ea
 
 ## Algorithm for large number of players
 
+**UPDATE: In rare cases, this algorithm can produce suboptimal pairing.**
+
 For more than 200 players, the runtime of the minimum cost perfect matching algorithm starts to grow. Therefore, a different algorithm is used. The pods are still constructed in the same way. Then, if power pairing is
 disabled, the algorithm ranks the players in each pod at random and then sticks all players together to form pseudo-standings. In case of power pairing, the actual standings are used. Then, the algorithm takes the highest-ranked not-yet-paired
 player and pairs them with the next highest-ranked not-yet-paired player. This repeats until all players are paired. In case the algorithm encounters a player that cannot be paired, the most recently made match is broken and the higher-ranked
