@@ -99,8 +99,11 @@ All measurements were done with randomly generated match results.
 
 ## Acknowledgements
 
-- **Jari Rentsch** ([@Tiray7](https://www.github.com/Tiray7)) for helping with the product specification
+There are some people who helped me make this thing possible and I would like to thank them for that. In aplhabetical order, they are:
+
+- **Antoine Albertelli** ([@antoinealb]([https://www.github.com/Tiray7](https://github.com/antoinealb))) for making the library compile on MacOS
 - **Dilson Lucas Pereira** ([@dilsonpereira](https://www.github.com/dilsonpereira)) for publishing an algorithm to solve the min-cost maximum matching problem and helping with using unlimited floats instead of doubles
+- **Jari Rentsch** ([@Tiray7](https://www.github.com/Tiray7)) for helping with the product specification
 
 ## License
 
