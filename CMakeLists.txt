@@ -3,11 +3,7 @@ project(swisspair)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_subdirectory(gmpwrap)
 add_subdirectory(Minimum-Cost-Perfect-Matching)
-
-target_link_libraries(mincostpmatch PUBLIC gmpwrap)
-target_include_directories(mincostpmatch PUBLIC Minimum-Cost-Perfect-Matching)
 
 add_definitions(-DDFS_THRESHOLD=200)
 
