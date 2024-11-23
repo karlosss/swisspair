@@ -1,7 +1,7 @@
 #include "matching.h"
 #include <unordered_map>
 
-#include "../../../../gmpwrap/gmpwrap.h"
+#include "gmpwrap.h"
 #include "../../../../Minimum-Cost-Perfect-Matching/library.h"
 
 std::vector<std::pair<std::string, std::string>> compute_min_cost_perfect_matching(const UndirectedSimpleWeightedGraph<std::string, BigFloat> & graph) {
